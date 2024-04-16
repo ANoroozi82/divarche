@@ -1,12 +1,16 @@
 {
   "name": "divarche",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a app for web class",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.0"
+  }
 }
