@@ -1,12 +1,19 @@
 {
   "name": "divarche",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a app for web class",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "eslint": "^9.1.0",
+    "jalali-moment": "^3.3.11",
+    "nodemon": "^3.1.0"
+  }
 }
