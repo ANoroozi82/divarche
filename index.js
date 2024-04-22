@@ -4,4 +4,4 @@ const core = new Core();
 
 core.init();
 
-core.startServer({port: 5000});
+core.startServer({port: 3000});
