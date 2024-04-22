@@ -1,7 +1,3 @@
-const Core = require('./framework/core')
+const server =  require('./src/server/server');
 
-const core = new Core();
-
-core.init();
-
-core.startServer({port: 3000});
+server();
