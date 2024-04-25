@@ -3,5 +3,5 @@ const accesses = require('../middleware/accesses');
 
 module.exports = (req , res) => {
   // validation(req, res, () => {});
-  new accesses(req, res);
+  accesses(req, res);
 };
