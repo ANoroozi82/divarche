@@ -5,3 +5,5 @@ class SessionModel extends Base {
     super('sessions');
   }
 }
+
+module.exports = SessionModel;

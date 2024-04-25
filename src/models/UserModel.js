@@ -1,7 +1,7 @@
-const BaseSqlModel = require('../models/BaseSqlModel')
+const BaseSqlModel = require('../models/BaseSqlModel');
 
 class UserModel extends BaseSqlModel{
-    constructor() {
-        super('user');
-    }
+  constructor() {
+    super('user');
+  }
 }
