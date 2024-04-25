@@ -21,15 +21,15 @@ class BaseSqlModel {
         return results
     }
 
-    async findById(KEY,VALUE) {
+    async findBy(KEY,VALUE) {
         await this.where(KEY,VALUE)
         const query = `SELECT * FROM ${this.tableName} ${this.WHERE_QUERY}`
         const results = await this.executeQuery(query, [VALUE])
         return results[0]
     }
 
-    async CREATE(VALUE) {
-        const query = `INSERT INTO ${this.tableName} set ${VALUE}`
+    async CREATE(KEYS,VALUES) {
+        const query = `INSERT INTO ${this.tableName}(${KEYS}) VALUES(${VALUES})`
         const results = this.executeQuery(query, VALUE)
         return results.insertId
     }
@@ -47,7 +47,7 @@ class BaseSqlModel {
         return results.affectedRows
     }
     async where(KEY,VALUE){
-        this.WHERE_QUERY = ` WHERE ${KEY} = ${VALUE}`
+        this.WHERE_QUERY = ` WHERE ${KEY} = '${VALUE}'`
     }
 }
 

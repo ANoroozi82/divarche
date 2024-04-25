@@ -4,21 +4,19 @@
   "description": "This is a app for web class",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "ajv": "^8.12.0",
-    "eslint": "^9.1.0",
-    "jalali-moment": "^3.3.11",
-=======
+    "bcryptjs": "^2.4.3",
     "eslint": "^9.0.0",
+    "jalali-moment": "^3.3.11",
+    "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
->>>>>>> M.golzar
     "nodemon": "^3.1.0"
   }
 }
