@@ -1,6 +1,7 @@
 const mySql = require('../database/mySql')
 
 class BaseSqlModel {
+    WHERE_QUERY
     constructor(tableName) {
         this.mysql = (new mySql()).db
         this.tableName = tableName
@@ -20,28 +21,33 @@ class BaseSqlModel {
         return results
     }
 
-    async findById(id) {
-        const query = `SELECT * FROM ${this.tableName} WHERE id = ${id}`
-        const results = await this.executeQuery(query, [id])
+    async findById(KEY,VALUE) {
+        await this.where(KEY,VALUE)
+        const query = `SELECT * FROM ${this.tableName} ${this.WHERE_QUERY}`
+        const results = await this.executeQuery(query, [VALUE])
         return results[0]
     }
 
-    async create(data) {
-        const query = `INSERT INTO ${this.tableName} set {data}`
-        const results = this.executeQuery(query, data)
+    async CREATE(VALUE) {
+        const query = `INSERT INTO ${this.tableName} set ${VALUE}`
+        const results = this.executeQuery(query, VALUE)
         return results.insertId
     }
 
-    async update(id, data) {
-        const query = `UPDATE ${this.tableName} SET ${data} WHERE id = ${id} `
-        const results = this.executeQuery(query, [data, id])
+    async UPDATE(KEY,VALUE) {
+        await this.where(KEY,VALUE)
+        const query = `UPDATE ${this.tableName} SET ${VALUE} ${this.WHERE_QUERY}`
+        const results = this.executeQuery(query, [VALUE, KEY])
         return results.affectedRows
     }
-
-    async delete(id) {
-        const query = `DELETE FROM ${this.tableName} WHERE id = ${id}`
-        const results = this.executeQuery(query, [id])
+    async DELETE(KEY,VALUE) {
+        await this.where(KEY,VALUE)
+        const query = `DELETE FROM ${this.tableName} ${this.WHERE_QUERY}`
+        const results = this.executeQuery(query, [VALUE])
         return results.affectedRows
+    }
+    async where(KEY,VALUE){
+        this.WHERE_QUERY = ` WHERE ${KEY} = ${VALUE}`
     }
 }
 
