@@ -2,6 +2,8 @@ const BaseSqlModel = require('../models/BaseSqlModel');
 
 class UserModel extends BaseSqlModel{
   constructor() {
-    super('user');
+    super('users');
   }
 }
+
+module.exports = UserModel

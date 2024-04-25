@@ -1,18 +1,32 @@
-const mySql = require('../database/mySql')
+const mySql = require('mysql')
+const connectionConfig = require("../configs/config");
 
 class BaseSqlModel {
     WHERE_QUERY
+
+
     constructor(tableName) {
-        this.mysql = (new mySql()).db
         this.tableName = tableName
+        this.connection = mySql.createConnection(connectionConfig.databaseConfig)
+        this.connection.connect((error) => {
+            if (error) throw error
+            console.log('connected!!!')
+        })
+
     }
 
-    executeQuery(query, params) {
-        return new Promise((resolve, reject) => {
-            this.mysql.query(query, params, (error, result) => {
-                error ? reject(error) : resolve(result)
-            })
+   async executeQuery(sql) {
+        return await new Promise((resolve ,reject)=>{
+             this.connection.query(sql, (error, result) => {
+                    if (error) reject(error)
+                     resolve(result)
+                }
+            )
         })
+
+
+
+
     }
 
     async findAll() {
@@ -21,32 +35,35 @@ class BaseSqlModel {
         return results
     }
 
-    async findBy(KEY,VALUE) {
-        await this.where(KEY,VALUE)
-        const query = `SELECT * FROM ${this.tableName} ${this.WHERE_QUERY}`
-        const results = await this.executeQuery(query, [VALUE])
-        return results[0]
+    async findBy(PARAMS, KEY, VALUE) {
+        await this.where(KEY, VALUE)
+        const query = `SELECT ${PARAMS} FROM ${this.tableName} ${this.WHERE_QUERY}`
+        const result = await this.executeQuery(query)
+        return result
     }
 
-    async CREATE(KEYS,VALUES) {
+    async CREATE(KEYS, VALUES) {
         const query = `INSERT INTO ${this.tableName}(${KEYS}) VALUES(${VALUES})`
-        const results = this.executeQuery(query, VALUE)
-        return results.insertId
+
+        const results = this.executeQuery(query)
+        return results.affectedRows
     }
 
-    async UPDATE(KEY,VALUE) {
-        await this.where(KEY,VALUE)
+    async UPDATE(KEY, VALUE) {
+        await this.where(KEY, VALUE)
         const query = `UPDATE ${this.tableName} SET ${VALUE} ${this.WHERE_QUERY}`
         const results = this.executeQuery(query, [VALUE, KEY])
         return results.affectedRows
     }
-    async DELETE(KEY,VALUE) {
-        await this.where(KEY,VALUE)
+
+    async DELETE(KEY, VALUE) {
+        await this.where(KEY, VALUE)
         const query = `DELETE FROM ${this.tableName} ${this.WHERE_QUERY}`
         const results = this.executeQuery(query, [VALUE])
         return results.affectedRows
     }
-    async where(KEY,VALUE){
+
+    async where(KEY, VALUE) {
         this.WHERE_QUERY = ` WHERE ${KEY} = '${VALUE}'`
     }
 }
