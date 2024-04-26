@@ -16,7 +16,7 @@ class BaseSqlModel {
     }
 
    async executeQuery(sql) {
-        return await new Promise((resolve ,reject)=>{
+        return new Promise((resolve ,reject)=>{
              this.connection.query(sql, (error, result) => {
                     if (error) reject(error)
                      resolve(result)

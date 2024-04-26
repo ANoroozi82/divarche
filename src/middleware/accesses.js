@@ -1,16 +1,12 @@
 const responseController = require('../controllers/responseController');
-const AccessModel = require('../models/AccessModel');
-const SessionModel = require('../models/SessionModel');
 const Cookies = require('cookies');
 const shortid = require('shortid');
 const moment = require('jalali-moment');
 
 class Access {
-
-  constructor(req, res) {
-    this.access = new AccessModel();
-    this.session = new SessionModel();
-    this.checkPermission(req, res, null);
+  constructor(diContainer) {
+    this.access = diContainer.get('accessModel');
+    this.session = diContainer.get('sessionModel');
   }
 
   async checkPermission(req, res, token) {
@@ -20,14 +16,12 @@ class Access {
       const infoJson = JSON.parse(sessionResult[0].info);
       const accessList = await this.getAccess(infoJson['role']);
       if (!accessList.includes(req.pathName)) {
-        responseController(res, 403, 'Access denied', 'accessDenied');
+        responseController(res, 403, 'You do not have access to this path', 'accessDenied');
       }
-      else {
-        responseController(res, 200, 'Got it', 's');
-      }
+      return true;
     }
     else {
-      await this.createSession(req, res);
+      return await this.createSession(req, res);
     }
   }
   
@@ -70,7 +64,7 @@ class Access {
 
       await this.session.CREATE('token, info', `'${req.token}', '${JSON.stringify(info)}'`);
       this.setCookie(req, res, expired);
-      await this.checkPermission(req, res, req.token);
+      return await this.checkPermission(req, res, req.token);
     }
     catch (err) {
       return err;
