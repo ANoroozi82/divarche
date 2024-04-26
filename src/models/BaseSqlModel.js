@@ -29,8 +29,8 @@ class BaseSqlModel {
 
     }
 
-    async findAll() {
-        const query = `SELECT * FROM ${this.tableName}`
+    async findAll(getKey) {
+        const query = `SELECT ${getKey} FROM ${this.tableName}`
         const results = await this.executeQuery(query)
         return results
     }

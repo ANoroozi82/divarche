@@ -1,6 +1,6 @@
 module.exports = {
-    'type' : 'object',
-    'properties' : {},
-    'required' : [],
-    'additionalProperties' : false
-}
+  'type' : 'object',
+  'properties' : {},
+  'required' : [],
+  'additionalProperties' : false
+};

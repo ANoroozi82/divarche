@@ -11,6 +11,7 @@ class RoutesClass {
     this.postsController = this.diContainer.get('postsController');
     this.route = {
       '/user/signup' : this.userInfoController.signup,
+      '/post/getdata' : this.postsController.getData
     };
   }
 
@@ -53,10 +54,13 @@ const chooseRoute = {
     '/user/getInfo' : () => {
       return true;
     },
+    '/post/getdata' : () => {
+      return true;
+    }
   },
   default : (res, err) => {
     if (err.message === 'chooseRoute[req.method][req.pathName] is not a function') {
-      responseController(res, 404, 'Route or Method not Found', 'RouteOrMethodNotAllowed');
+      responseController(res, 405, 'Route or Method not Found', 'RouteOrMethodNotAllowed');
     }
   }
 };

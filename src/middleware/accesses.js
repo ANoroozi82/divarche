@@ -17,6 +17,7 @@ class Access {
       const accessList = await this.getAccess(infoJson['role']);
       if (!accessList.includes(req.pathName)) {
         responseController(res, 403, 'You do not have access to this path', 'accessDenied');
+        return false;
       }
       return true;
     }

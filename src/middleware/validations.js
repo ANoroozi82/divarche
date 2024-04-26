@@ -6,6 +6,7 @@ const login = require('../schemas/login');
 const logout = require('../schemas/logout');
 const getInfo = require('../schemas/getInfo');
 const updateInfo = require('../schemas/updateInfo');
+const getData = require('../schemas/getData');
 
 module.exports = (req, res, next) => {
   const { pathname } = url.parse(req.url);
@@ -30,4 +31,5 @@ const schemas = {
   '/user/logout' : logout,
   '/user/getInfo' : getInfo,
   '/user/updateInfo' : updateInfo,
+  '/post/getdata' : getData
 };
