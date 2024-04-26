@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
     next(req, res);
   }
   else {
-    responseController(res, 400, ajv.errorsText(validate.errors), 'wrongParam');
+    responseController(res, 403, ajv.errorsText(validate.errors), 'wrongParam');
   }
 };
 

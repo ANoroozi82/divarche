@@ -16,7 +16,7 @@ class BaseSqlModel {
     }
 
    async executeQuery(sql) {
-        return await new Promise((resolve ,reject)=>{
+        return new Promise((resolve ,reject)=>{
              this.connection.query(sql, (error, result) => {
                     if (error) reject(error)
                      resolve(result)
@@ -45,7 +45,7 @@ class BaseSqlModel {
     async CREATE(KEYS, VALUES) {
         const query = `INSERT INTO ${this.tableName}(${KEYS}) VALUES(${VALUES})`
 
-        const results = this.executeQuery(query)
+        const results = await this.executeQuery(query)
         return results.affectedRows
     }
 
