@@ -1,15 +1,13 @@
 const validation = require('../middleware/validations');
 const accesses = require('../middleware/accesses');
 const responseController = require('../controllers/responseController');
-const userInfoController = require('../controllers/userInfoController');
-const u = new userInfoController()
 const url = require('url');
 
 module.exports = async (req , res) => {
   try {
-    await u.signup(req,res)
-    // req.pathName = url.parse(req.url).pathname;
-    // chooseRoute[req.method][req.pathName]().checkAccess(req, res).validation(req, res);
+    // await u.signup(req,res);
+    req.pathName = url.parse(req.url).pathname;
+    chooseRoute[req.method][req.pathName]().checkAccess(req, res).validation(req, res);
   }
   catch (err) {
     chooseRoute.default(res, err);

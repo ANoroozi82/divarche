@@ -45,7 +45,7 @@ class BaseSqlModel {
     async CREATE(KEYS, VALUES) {
         const query = `INSERT INTO ${this.tableName}(${KEYS}) VALUES(${VALUES})`
 
-        const results = this.executeQuery(query)
+        const results = await this.executeQuery(query)
         return results.affectedRows
     }
 
