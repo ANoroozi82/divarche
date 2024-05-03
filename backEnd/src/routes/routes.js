@@ -10,22 +10,24 @@ class RoutesClass {
     this.userInfoController = this.diContainer.get('userInfoController');
     this.postsController = this.diContainer.get('postsController');
     this.route = {
-      '/user/signup' : this.userInfoController.signup,
+      '/user/signup': this.userInfoController.signup,
     };
   }
 
   async routes(req, res) {
+
     try {
       req.pathName = url.parse(req.url).pathname;
       const access = new Accesses(this.diContainer);
       if (chooseRoute[req.method][req.pathName]()) {
         if (await access.checkPermission(req, res, null)) {
-          validation(req, res, this.route[req.pathName]);
+          await validation(req, res, this.route[req.pathName]);
         }
       }
     }
     catch (err) {
       chooseRoute.default(res, err);
+
     }
   }
 }
@@ -33,28 +35,28 @@ class RoutesClass {
 module.exports = RoutesClass;
 
 const chooseRoute = {
-  'POST' : {
-    '/user/signup' : () => {
+  'POST': {
+    '/user/signup': () => {
       return true;
     },
   },
-  'PUT' : {
-    '/user/login' : () => {
+  'PUT': {
+    '/user/login': () => {
       return true;
     },
-    '/user/logout' : () => {
+    '/user/logout': () => {
       return true;
     },
-    '/user/updateInfo' : () => {
-      return true;
-    },
-  },
-  'GET' : {
-    '/user/getInfo' : () => {
+    '/user/updateInfo': () => {
       return true;
     },
   },
-  default : (res, err) => {
+  'GET': {
+    '/user/getInfo': () => {
+      return true;
+    },
+  },
+  default: (res, err) => {
     if (err.message === 'chooseRoute[req.method][req.pathName] is not a function') {
       responseController(res, 404, 'Route or Method not Found', 'RouteOrMethodNotAllowed');
     }

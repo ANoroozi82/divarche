@@ -3,8 +3,10 @@ const Cookies = require('cookies');
 const shortid = require('shortid');
 const moment = require('jalali-moment');
 
+
 class Access {
   constructor(diContainer) {
+    this.diContainer=diContainer;
     this.access = diContainer.get('accessModel');
     this.session = diContainer.get('sessionModel');
   }
@@ -79,7 +81,6 @@ class Access {
     tomorrow.setTime(tomorrow.getTime() + (24 * 60 * 60 * 1000));
     return tomorrow.toUTCString();
   }
-
 
 }
 

@@ -7,7 +7,9 @@ const logout = require('../schemas/logout');
 const getInfo = require('../schemas/getInfo');
 const updateInfo = require('../schemas/updateInfo');
 
-module.exports = (req, res, next) => {
+
+
+module.exports = async (req, res, next) => {
   const { pathname } = url.parse(req.url);
 
   const ajv = new Ajv({  allErrors: true, verbose: true});

@@ -9,7 +9,7 @@ class BaseSqlModel {
     this.tableName = tableName;
     this.connection = mySql.createConnection(connectionConfig.databaseConfig);
     this.connection.connect((error) => {
-      if (error) throw error;
+      if (error) throw new error;
       console.log('connected!!!');
     });
 
