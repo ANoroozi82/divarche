@@ -2,8 +2,6 @@ const validation = require('../middleware/validations');
 const Accesses = require('../middleware/accesses');
 const responseController = require('../controllers/responseController');
 const url = require('url');
-
-
 class RoutesClass {
   constructor(diContainer) {
     this.diContainer = diContainer;
@@ -11,7 +9,8 @@ class RoutesClass {
     this.postsController = this.diContainer.get('postsController');
     this.route = {
       '/user/signup' : this.userInfoController.signup,
-      '/post/getdata' : this.postsController.getData
+      '/post/data' : this.postsController.getData,
+      '/post/selectdata' : this.postsController.getSelectData
     };
   }
 
@@ -21,7 +20,7 @@ class RoutesClass {
       const access = new Accesses(this.diContainer);
       if (chooseRoute[req.method][req.pathName]()) {
         if (await access.checkPermission(req, res, null)) {
-          validation(req, res, this.route[req.pathName]);
+          await validation(req, res, this.route[req.pathName]);
         }
       }
     }
@@ -34,31 +33,34 @@ class RoutesClass {
 module.exports = RoutesClass;
 
 const chooseRoute = {
-  'POST' : {
-    '/user/signup' : () => {
+  'POST': {
+    '/user/signup': () => {
       return true;
     },
   },
-  'PUT' : {
-    '/user/login' : () => {
+  'PUT': {
+    '/user/login': () => {
       return true;
     },
-    '/user/logout' : () => {
+    '/user/logout': () => {
       return true;
     },
-    '/user/updateInfo' : () => {
+    '/user/updateInfo': () => {
       return true;
     },
   },
-  'GET' : {
-    '/user/getInfo' : () => {
+  'GET': {
+    '/user/getInfo': () => {
       return true;
     },
-    '/post/getdata' : () => {
+    '/post/data' : () => {
+      return true;
+    },
+    '/post/selectdata' : () => {
       return true;
     }
   },
-  default : (res, err) => {
+  default: (res, err) => {
     if (err.message === 'chooseRoute[req.method][req.pathName] is not a function') {
       responseController(res, 405, 'Route or Method not Found', 'RouteOrMethodNotAllowed');
     }
