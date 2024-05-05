@@ -10,6 +10,7 @@ class UserInfoController {
   async signup(req, res) {
     try {
       console.log(req.body);
+
       // let keys = 'user_id,phone_number,role_name,user,pass';
       // let values = '\'1\',\'09336077180\',\'admin\',\'mahdi.golzar\',\'MahdiJs1382@\'';
       // const r = await this.user.CREATE(keys, values);

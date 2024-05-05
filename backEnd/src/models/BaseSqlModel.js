@@ -30,8 +30,8 @@ class BaseSqlModel {
     return results;
   }
 
-  async findBy(PARAMS, condition) {
-    const query = `SELECT ${PARAMS} FROM ${this.tableName} WHERE ${condition} `;
+  async findBy(PARAMS, CONDITIONS) {
+    const query = `SELECT ${PARAMS} FROM ${this.tableName} WHERE ${CONDITIONS} `;
     const result = await this.executeQuery(query);
     return result;
   }
