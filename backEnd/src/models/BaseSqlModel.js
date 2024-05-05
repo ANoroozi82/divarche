@@ -22,8 +22,6 @@ class BaseSqlModel {
         resolve(result);
       });
     });
-
-
   }
 
   async findAll() {
@@ -32,9 +30,8 @@ class BaseSqlModel {
     return results;
   }
 
-  async findBy(PARAMS, KEY, VALUE) {
-    await this.where(KEY, VALUE);
-    const query = `SELECT ${PARAMS} FROM ${this.tableName} ${this.WHERE_QUERY}`;
+  async findBy(PARAMS, condition) {
+    const query = `SELECT ${PARAMS} FROM ${this.tableName} WHERE ${condition} `;
     const result = await this.executeQuery(query);
     return result;
   }
