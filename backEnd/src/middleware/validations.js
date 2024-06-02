@@ -6,8 +6,12 @@ const login = require('../schemas/login');
 const logout = require('../schemas/logout');
 const getInfo = require('../schemas/getInfo');
 const updateInfo = require('../schemas/updateInfo');
+const getData = require('../schemas/getData');
+const getSelectData = require('../schemas/getSelectData');
 
-module.exports = (req, res, next) => {
+
+
+module.exports = async (req, res, next) => {
   const { pathname } = url.parse(req.url);
 
   const ajv = new Ajv({  allErrors: true, verbose: true});
@@ -30,4 +34,6 @@ const schemas = {
   '/user/logout' : logout,
   '/user/getInfo' : getInfo,
   '/user/updateInfo' : updateInfo,
+  '/post/data' : getData,
+  '/post/selectdata' : getSelectData
 };

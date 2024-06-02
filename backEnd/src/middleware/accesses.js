@@ -3,8 +3,10 @@ const Cookies = require('cookies');
 const shortid = require('shortid');
 const moment = require('jalali-moment');
 
+
 class Access {
   constructor(diContainer) {
+    this.diContainer=diContainer;
     this.access = diContainer.get('accessModel');
     this.session = diContainer.get('sessionModel');
   }
@@ -17,6 +19,7 @@ class Access {
       const accessList = await this.getAccess(infoJson['role']);
       if (!accessList.includes(req.pathName)) {
         responseController(res, 403, 'You do not have access to this path', 'accessDenied');
+        return false;
       }
       return true;
     }
@@ -79,7 +82,6 @@ class Access {
     tomorrow.setTime(tomorrow.getTime() + (24 * 60 * 60 * 1000));
     return tomorrow.toUTCString();
   }
-
 
 }
 
